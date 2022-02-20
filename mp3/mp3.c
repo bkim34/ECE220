@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+//partners:jaejin2, thomasp6
 //the algorithm used for this mp is two for loops, one to print the desired number of digits for the row inputed in pascals triangle, and another to cortrectly calculate the digit that should be printed. because operations requiremultiplying and dividing with decimals, we want to use a unsigned long variable.
 
 int main()
