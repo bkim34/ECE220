@@ -1,7 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+/* Partners: jaejin2, thomasp6
+For the is_prime function, I swapped the o and 1 because it is supposed to return 1 not 0 if it is prime.
+I also swapped i%j to i/j in print_semiprimes since it would always send 0 with %. lastly, I added a ret 1
+ and break inside the final if statement in print_semiprimes, since the program is supposed to return 1 if 
+the number is a semi prime and if it passes 
+all those if statements it is. the break added makes sure there arent multiple of the same semi prime.
+*/
 /*
  * is_prime: determines whether the provided number is prime or not
  * Input    : a number
@@ -13,10 +19,10 @@ int is_prime(int number)
     if (number == 1) {return 0;}
     for (i = 2; i < number; i++) { //for each number smaller than it
         if (number % i == 0) { //check if the remainder is 0
-            return 1;
+            return 0;
         }
     }
-    return 0;
+    return 1;
 }
 
 
@@ -34,9 +40,11 @@ int print_semiprimes(int a, int b)
         for (j = 2; j <= i; j++) {
             if (i%j == 0) {
                 if (is_prime(j)) {
-                    k = i%j;
+                    k = i/j;
                     if (is_prime(k)) {
                         printf("%d ", i);
+                        ret = 1;
+                        break;
                     }
                 }
             }
@@ -45,5 +53,4 @@ int print_semiprimes(int a, int b)
     }
     printf("\n");
     return ret;
-
 }
