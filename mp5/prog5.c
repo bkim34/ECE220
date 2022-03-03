@@ -4,8 +4,14 @@
  *           student code -- GOLD VERSION by Steven S. Lumetta
  */
 
-// partners thomasp5, jaejin2
-// for this mp, i followed the insrcuctions given
+// partners thomasp6, jaejin2
+/* for this mp, i followed the insrcuctions given for most things for set_seed and start_game, i just followed what the mp said to type and was able to
+do those without much of a problem. for make_guess my algorithm was to first check if the guess is valid, if it isnt valid it follows the instructions
+if it was valid, we first traversered thru the guesses for perfect matches and then misplaced guesses. by using two arrays we kept track of what numbers
+had been used and which had not so there would be any extra misplaced guesses. we then print the staement given with the guess number and increment the guess.
+after doing that, we are done as we return the correct values and have the correct side effects.
+
+*/
 /*
  * The functions that you must write are defined in the header file.
  * Blank function prototypes with explanatory headers are provided
@@ -70,11 +76,11 @@ set_seed (const char seed_str[])
 	if (sscanf (seed_str, "%d%1s", &seed, post)==1) //seed_str is a single intege. i did this by seeing if the size of str is 0.
 	{
 		srand(seed); //x is the integer inputted as the string
-		return 1;
+		return 1; // return 1 since the seed waas made
 	}
 	else
 	{
-		printf("set_seed: invalid seed\n");
+		printf("set_seed: invalid seed\n"); //return 0 since seed was invalid and print it was invalid
 		return 0;
 	}
     return 0;
@@ -99,11 +105,11 @@ set_seed (const char seed_str[])
 void
 start_game (int* one, int* two, int* three, int* four)
 {
-    *one = (rand()%8+1);
+    *one = (rand()%8+1); // set the solutions
 	*two = (rand()%8+1);
 	*three = (rand()%8+1);
 	*four = (rand()%8+1);
-	guess_number =1;
+	guess_number =1; // set as stated in directions
 	solution1= *one;
 	solution2= *two;
 	solution3= *three;
@@ -141,36 +147,35 @@ make_guess (const char guess_str[], int* one, int* two,
 {
 	int w;
 	int x;
-	int y;
+	int y; // these are the guess vars// valid guess check
 	int z;
 	char post[2];
-	int perfect_guess=0;
-	int misplaced_guess=0;
+	int perfect_guess=0; // init number of perfect guesses
+	int misplaced_guess=0; // init number of misplaced guesses
 
 	 //inititalizing the needed variables
-	if(sscanf (guess_str, "%d%d%d%d%1s", &w, &x, &y, &z, post)!= 4)
+	if(sscanf (guess_str, "%d%d%d%d%1s", &w, &x, &y, &z, post)!= 4) // valid guess check
 	{
 		printf("make_guess: invalid guess\n");
 		return 0;
 	}
 	*one=w;
 	*two=x;
-	*three=y;
+	*three=y; // insctructions say set these to the guesses
 	*four=z;
 	int guess_m[4]={w, x, y, z};
 	int sol_m[4]={solution1, solution2, solution3, solution4};
-	printf("%d, %d, %d, %d", solution1, solution2, solution3, solution4);
 	int paired_guess[4]={0,0,0,0};
 	int paired_sol[4]={0,0,0,0};
-	if(1<=w && w<=8 && 1<=x&&x<=8 &&1<=y&&y<=8 && 1<=z&&z<=8) //checking if it is between 1 and 8
+	if(1<=w && w<=8 && 1<=x&&x<=8 &&1<=y&&y<=8 && 1<=z&&z<=8) //checking if it is between 1 and 8 for a valid guess
 	{
 		//because it is, we continue
 		for(int i=0;i <4;i++)//step 1 of the algorithm to check perfect  matches
 		{
 			if (sol_m[i]==guess_m[i])
 			{
-				perfect_guess++;
-				paired_guess[i]=1;
+				perfect_guess++; // perfect match is found
+				paired_guess[i]=1; // the numbers have been used
 				paired_sol[i]=1;
 			}
 		}
