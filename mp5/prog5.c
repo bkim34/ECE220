@@ -4,7 +4,8 @@
  *           student code -- GOLD VERSION by Steven S. Lumetta
  */
 
-
+// partners thomasp5, jaejin2
+// for this mp, i followed the insrcuctions given
 /*
  * The functions that you must write are defined in the header file.
  * Blank function prototypes with explanatory headers are provided
@@ -62,7 +63,20 @@ set_seed (const char seed_str[])
 //    Check that the return value is 1 to ensure the user enters only an integer. 
 //    Feel free to uncomment these statements, modify them, or delete these comments as necessary. 
 //    You may need to change the return statement below
-   
+    
+	int seed;
+	char post[2];
+    
+	if (sscanf (seed_str, "%d%1s", &seed, post)==1) //seed_str is a single intege. i did this by seeing if the size of str is 0.
+	{
+		srand(seed); //x is the integer inputted as the string
+		return 1;
+	}
+	else
+	{
+		printf("set_seed: invalid seed\n");
+		return 0;
+	}
     return 0;
 }
 
@@ -85,6 +99,15 @@ set_seed (const char seed_str[])
 void
 start_game (int* one, int* two, int* three, int* four)
 {
+    *one = (rand()%8+1);
+	*two = (rand()%8+1);
+	*three = (rand()%8+1);
+	*four = (rand()%8+1);
+	guess_number =1;
+	solution1= *one;
+	solution2= *two;
+	solution3= *three;
+	solution4= *four;
     //your code here
     
 }
@@ -116,6 +139,69 @@ int
 make_guess (const char guess_str[], int* one, int* two, 
 	    int* three, int* four)
 {
+	int w;
+	int x;
+	int y;
+	int z;
+	char post[2];
+	int perfect_guess=0;
+	int misplaced_guess=0;
+
+	 //inititalizing the needed variables
+	if(sscanf (guess_str, "%d%d%d%d%1s", &w, &x, &y, &z, post)!= 4)
+	{
+		printf("make_guess: invalid guess\n");
+		return 0;
+	}
+	*one=w;
+	*two=x;
+	*three=y;
+	*four=z;
+	int guess_m[4]={w, x, y, z};
+	int sol_m[4]={solution1, solution2, solution3, solution4};
+	int paired_guess[4]={0,0,0,0};
+	int paired_sol[4]={0,0,0,0};
+	printf("%d %d %d %d /n", w, x, y, z);
+	printf("%d %d %d %d /n",solution1, solution2, solution3, solution4);
+	if(1<=w && w<=8 && 1<=x&&x<=8 &&1<=y&&y<=8 && 1<=z&&z<=8) //checking if it is between 1 and 8
+	{
+		//because it is, we continue
+		for(int i=0;i <4;i++)//step 1 of the algorithm to check perfect  matches
+		{
+			if (sol_m[i]==guess_m[i])
+			{
+				perfect_guess++;
+				paired_guess[i]=1;
+				paired_sol[i]=1;
+				continue;
+			}
+			//if there are no perfect pairings we will check for misplaced
+			
+			for(int j =0; j<4;j++)
+			{
+				if ((sol_m[j]==guess_m[i])&& (paired_guess[i]==0) && (paired_sol[j]==0)) //check for misplaced guesss, but we dont want to pair it if already paired
+				{
+					misplaced_guess++; // increment since we have found a misplaced guess
+					paired_guess[i]=1; //incerement the paired guess
+					paired_sol[j]=1; // increment the paired solution
+				}
+
+			}
+		}
+		
+		printf("With guess %d, you got %d perfect matches and %d misplaced matches.\n", guess_number, perfect_guess, misplaced_guess); // print the number of matches
+		guess_number++; //increment guess
+	}
+	else
+	{
+		//because it isnt, it is invalid and we returrrn 0.
+		printf("make_guess: invalid guess\n");
+		return 0;
+	}
+
+
+
+
 //  One thing you will need to read four integers from the string guess_str, using a process
 //  similar to set_seed
 //  The statement, given char post[2]; and four integers w,x,y,z,
