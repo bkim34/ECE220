@@ -159,10 +159,9 @@ make_guess (const char guess_str[], int* one, int* two,
 	*four=z;
 	int guess_m[4]={w, x, y, z};
 	int sol_m[4]={solution1, solution2, solution3, solution4};
+	printf("%d, %d, %d, %d", solution1, solution2, solution3, solution4);
 	int paired_guess[4]={0,0,0,0};
 	int paired_sol[4]={0,0,0,0};
-	printf("%d %d %d %d /n", w, x, y, z);
-	printf("%d %d %d %d /n",solution1, solution2, solution3, solution4);
 	if(1<=w && w<=8 && 1<=x&&x<=8 &&1<=y&&y<=8 && 1<=z&&z<=8) //checking if it is between 1 and 8
 	{
 		//because it is, we continue
@@ -173,10 +172,11 @@ make_guess (const char guess_str[], int* one, int* two,
 				perfect_guess++;
 				paired_guess[i]=1;
 				paired_sol[i]=1;
-				continue;
 			}
+		}
 			//if there are no perfect pairings we will check for misplaced
-			
+		for (int i=0; i<4 ; i++)
+		{
 			for(int j =0; j<4;j++)
 			{
 				if ((sol_m[j]==guess_m[i])&& (paired_guess[i]==0) && (paired_sol[j]==0)) //check for misplaced guesss, but we dont want to pair it if already paired
