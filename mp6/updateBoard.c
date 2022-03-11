@@ -1,4 +1,24 @@
 /*
+partners Jaejin2, thomasp6
+
+partners Jaejin2, thomasp6
+
+for this mp, I followed the directions for countLiveNeighbor. by implementing the algorithm given, I was
+able to get it working. for updateBoard, I copied the current board, and then itterated through the array
+with two for loops, seeing if the cell was dead or alive, and then following the game rules to see whether 
+the cell would be updated or not. lastly, for alivestable, I copied gameboard, updated the copy to the next step
+then compared the two to see if they were the same. 
+
+*/
+
+
+
+
+
+
+
+
+/*
  * countLiveNeighbor
  * Inputs:
  * board: 1-D array of the current game board. 1 represents a live cell.
@@ -45,32 +65,58 @@ int countLiveNeighbor(int* board, int boardRowSize, int boardColSize, int row, i
  * Output: board is updated with new values for next step.
  */
 void updateBoard(int* board, int boardRowSize, int boardColSize) {
+    
     int board_copy[boardRowSize*boardColSize]; // i realize you need an empty board otherwise you modify the neighbors while checking other neighbors
+    //copy the clone into the real board
     for(int i=0; i<boardRowSize; i++)
     {
         for(int j=0; j<boardColSize; j++)
         {
-            int cells_alive = countLiveNeighbor(board,boardRowSize, boardColSize,i,j);
+            board_copy[i*boardColSize+j]= board[i*boardColSize+j];
+        }
+    }
+    
+    for(int i=0; i<boardRowSize; i++) //itterate throught the array
+    {
+        for(int j=0; j<boardColSize; j++)
+        {
+            int cells_alive = countLiveNeighbor(board,boardRowSize, boardColSize,i,j); // call function
             {
-                if (cells_alive==3 || (board[i*boardColSize+j]==1 && cells_alive==2))
+                if (board[i*boardColSize+j]==1) // see if cell is aive
                 {
-                    board_copy[boardColSize*i+j]=1;
+                    if (cells_alive<2) /// if it is alive follow the game rules
+                    {
+                        board_copy[boardColSize*i+j]=0;
+                    }
+                    else if(cells_alive>3)
+                    {
+                        board_copy[boardColSize*i+j]=0;
+                    }
+                    else 
+                    {
+                        board_copy[i*boardColSize+j]=1;
+                    }
                 }
-                else
+                else // if the cell misnt alive it is dead
                 {
-                    board_copy[boardColSize*i+j]=0;
+                    if(cells_alive==3) // follow the game rules
+                    {
+                        board_copy[boardColSize*i+j]=1;
+                    }
                 }
             }
         }
     }
-    // you now need to copy the clone into the real board
-    for(int k=0; k<boardRowSize; k++)
+    for(int i=0; i<boardRowSize; i++) // put the updated copy into the real game board
     {
-        for(int l=0; l<boardColSize; l++)
+        for(int j=0; j<boardColSize; j++)
         {
-            board[k*boardColSize+l]= board_copy[k*boardColSize+l];
+            board[i*boardColSize+j]= board_copy[i*boardColSize+j];
         }
     }
+    
+    
+    
 }
 
 /*
@@ -95,7 +141,7 @@ int aliveStable(int* board, int boardRowSize, int boardColSize)
             board_copy_two[i*boardColSize+j]= board[i*boardColSize+j]; // copy array into copy
         }
     }
-    updateBoard(board,boardRowSize, boardColSize); //call the next step 
+    updateBoard(board_copy_two,boardRowSize, boardColSize); //call the next step 
     for(int i=0; i<boardRowSize; i++) // traverse through arrays
     {
         for(int j=0; j<boardColSize; j++)
