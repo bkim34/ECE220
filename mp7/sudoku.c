@@ -1,4 +1,6 @@
 #include "sudoku.h"
+
+// partners jaejin2 thomasp6
 //This program has 5 major functions: is_val_in_row, is_val_in_col, is_val_in_3x3_zone, is_val_valid, all_cells_assigned, and solve_sudoku
 //is_val_row and is_val_col find whether val is in the certain row and column, and is_val_in_3x3_zone checks if val is in the 3x3 zone
 //is val_valid uses all the 3 previous function to determine if val can be used. The private function all_cells_assigned checks whether if all the cells have numbers assigned
